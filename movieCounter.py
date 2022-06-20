@@ -20,12 +20,12 @@ if __name__ == "__main__":
 
     #movies = sc.parallelize(text.take(10))
 
-    for i in text.take(10):
-        print(i)
-
-    ratings = text.flatMap(get_rating)
+    ratings = text.map(get_rating)
     ones = ratings.map(lambda b: ( b, 1 ))
     counts = ones.reduceByKey(lambda x, y: x + y)
     #counts.saveAsTextFile("data/")
+    sum = 0
     for i in counts.collect():
+        sum = sum + i[1]
         print(i)
+    print(sum)
