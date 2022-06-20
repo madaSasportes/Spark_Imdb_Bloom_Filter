@@ -9,15 +9,19 @@ if __name__ == "__main__":
 
     def get_rating(line):
         movie = line.split("\t")
+        result = "e"
         try:
-            rating = round(float(movie[1]))
+            result = str(round(float(movie[1])))
         except:
-            rating  = 0
-        return str(rating)
+            result = "t"
+        return result
 
     text = sc.textFile("data.tsv")
 
     #movies = sc.parallelize(text.take(10))
+
+    for i in text.take(10):
+        print(i)
 
     ratings = text.flatMap(get_rating)
     ones = ratings.map(lambda b: ( b, 1 ))
