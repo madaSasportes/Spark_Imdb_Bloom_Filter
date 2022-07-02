@@ -1,6 +1,7 @@
 import sys
 from pyspark import SparkContext
 from RatingBloomFilter import RatingBloomFilter
+from random import randint
 
 if __name__ == "__main__":
     master = "local"
