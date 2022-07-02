@@ -4,10 +4,9 @@ import mmh3
 #need to add the Murmur Hush
 
 class RatingBloomFilter:
-    def __init__(self,filterSize,amountOfSeeds):
+    def __init__(self,filterSize,seeds):
         self.filter = [False for i in range(filterSize)]
-        #maybe with list(bytearray(filterSize))
-        self.seeds = [randint(0, 2147483647) for i in range(amountOfSeeds)]
+        self.seeds = seeds
 
     def fillUp(self,rating):
         size = len(self.filter)
@@ -22,4 +21,13 @@ class RatingBloomFilter:
             pos = abs(mmh3.hash(rating,seed)) % size
             result = result and self.filter[pos]
         return result
+    
+    def merge_or(self,merge_filter):
+        for i in range(len(self.filter)):
+            self.filter[i] = self.filter[i] or merge_filter.filter[i]            
 
+    def toBitString(self):
+        result = ""
+        for i in self.filter:
+            result += "1" if i else "0"
+        return result
