@@ -48,13 +48,10 @@ if __name__ == "__main__":
     total_movies_per_group = entries.countByKey()
 
     total_false_positives = blooms_rdd.map(lambda x: (x[0], test_bloom(x)))
-    rate_false_positives = total_false_positives.map(lambda x: (x[0], x[1]/total_movies_per_group[x[0]]))
 
     #Collect Results
     fpt = total_false_positives.collect()
-    fpr = rate_false_positives.collect()
 
     #Print Results
     for i in range(len(fpt)):
-       print("Bloom Filter " +str(fpt[i][0]) + " gives back " + str(fpt[i][1]) + " false positives,"\
-       +" that corresponds to a false posititvity rate of " + str(round(fpr[i][1]*100,3)) + " percent")
+       print("Bloom Filter " +str(fpt[i][0]) + " gives back " + str(fpt[i][1]) + " false positives")
