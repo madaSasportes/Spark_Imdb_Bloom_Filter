@@ -8,17 +8,17 @@ class RatingBloomFilter:
         self.filter = [False for i in range(filterSize)]
         self.seeds = seeds
 
-    def fillUp(self,rating):
+    def fillUp(self,key):
         size = len(self.filter)
         for seed in self.seeds:
-            pos = abs(mmh3.hash(rating,seed)) % size
+            pos = abs(mmh3.hash(key,seed)) % size
             self.filter[pos] = True
     
-    def lookUp(self,rating):
+    def lookUp(self,key):
         size = len(self.filter)
         result = True
         for seed in self.seeds:
-            pos = abs(mmh3.hash(rating,seed)) % size
+            pos = abs(mmh3.hash(key,seed)) % size
             result = result and self.filter[pos]
         return result
     
