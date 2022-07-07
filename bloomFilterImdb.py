@@ -5,13 +5,28 @@ from RatingBloomFilter import RatingBloomFilter
 # initialize a new Spark Context to use for the execution of the script
 sc = SparkContext(appName="IMDB-BLOOM-FILTER", master="yarn")
 
+ns = [ #computed for p = 0.1 and n = amount of movies specific for th rating
+12221,
+36869,
+80198,
+239842,
+461985,
+1191226,
+1647997,
+1792914,
+450071,
+77486
+]
+
+rangestop = 3 #amount of hash functions, computed for p = 0.1 and n = amount of movies specific for th rating
+
 if __name__ == "__main__":
     master = "yarn"
     if len(sys.argv) == 2:
         master = sys.argv[1]
 
     def bloom_construction(movie):
-        bloom= RatingBloomFilter(400000, [10,20,30])
+        bloom= RatingBloomFilter(ns[movie[0]], list(range(1,rangestop+1)))
         for i in range(len(movie[1])):
             #bloom.add(movie[1][i])
             bloom.fillUp(movie[1][i])
