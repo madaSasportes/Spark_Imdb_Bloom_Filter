@@ -26,7 +26,7 @@ if __name__ == "__main__":
         master = sys.argv[1]
 
     def bloom_construction(movie):
-        bloom= RatingBloomFilter(ns[movie[0]], list(range(1,rangestop+1)))
+        bloom= RatingBloomFilter(ns[movie[0]-1], list(range(1,rangestop+1)))
         for i in range(len(movie[1])):
             #bloom.add(movie[1][i])
             bloom.fillUp(movie[1][i])
